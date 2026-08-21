@@ -1,0 +1,86 @@
+[
+  {
+    "patient_id": "P-001",
+    "static_profile": {
+      "patient_id": "P-001",
+      "age": 45,
+      "sex": "F",
+      "bmi": 24.5,
+      "is_pregnant": 0,
+      "ecog_score": 0,
+      "hiv_status": 0,
+      "hepb_status": 0,
+      "hepc_status": 0,
+      "irb_consent_signed": 1
+    },
+    "is_fit": true,
+    "rejection_reasons": [],
+    "baseline_vector": {
+      "egfr": 92.29,
+      "serum_creatinine": 0.89,
+      "alt": 25.15,
+      "ast": 27.1,
+      "platelets": 234397.86,
+      "anc": 2990.47,
+      "hemoglobin": 13.22,
+      "systolic_bp": 119.5,
+      "diastolic_bp": 74.51,
+      "hba1c": 5.33
+    },
+    "trajectory_slopes": {
+      "egfr": 0.0051,
+      "serum_creatinine": -0.0,
+      "alt": -0.002,
+      "ast": -0.013,
+      "platelets": -24.0429,
+      "anc": 0.0624,
+      "hemoglobin": -0.0054,
+      "systolic_bp": -0.0073,
+      "diastolic_bp": -0.0026,
+      "hba1c": -0.001
+    },
+    "synthetic_disease_state": "HEALTHY_CONTROL"
+  },
+  {
+    "patient_id": "P-005",
+    "static_profile": {
+      "patient_id": "P-005",
+      "age": 70,
+      "sex": "M",
+      "bmi": 27.0,
+      "is_pregnant": 0,
+      "ecog_score": 1,
+      "hiv_status": 0,
+      "hepb_status": 0,
+      "hepc_status": 0,
+      "irb_consent_signed": 1
+    },
+    "is_fit": true,
+    "rejection_reasons": [],
+    "baseline_vector": {
+      "egfr": 65.54,
+      "serum_creatinine": 1.21,
+      "alt": 39.48,
+      "ast": 38.14,
+      "platelets": 182134.95,
+      "anc": 3520.02,
+      "hemoglobin": 12.29,
+      "systolic_bp": 131.03,
+      "diastolic_bp": 82.17,
+      "hba1c": 6.24
+    },
+    "trajectory_slopes": {
+      "egfr": 0.0102,
+      "serum_creatinine": -0.0004,
+      "alt": -0.0029,
+      "ast": 0.0079,
+      "platelets": -15.0058,
+      "anc": 0.861,
+      "hemoglobin": -0.0017,
+      "systolic_bp": 0.0408,
+      "diastolic_bp": 0.0204,
+      "hba1c": -0.0001
+    },
+    "synthetic_disease_state": "HEALTHY_CONTROL"
+  }
+]

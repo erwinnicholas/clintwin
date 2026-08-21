@@ -1,0 +1,7 @@
+Trial Text Rules for RA
+========================================
+
+EXCLUSION: The patient has a history of solid tumor malignancy, non-small cell lung cancer (NSCLC), breast cancer, or lymphoma.
+EXCLUSION: The patient has an active HIV infection or CD4 count below 200.
+EXCLUSION: The patient has a latent or active tuberculosis (TB) infection.
+EXCLUSION: The patient has Hepatitis B (HBV) positive status or chronic hepatitis.

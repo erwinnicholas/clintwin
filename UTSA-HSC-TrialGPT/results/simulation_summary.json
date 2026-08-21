@@ -1,0 +1,13 @@
+{
+  "run_id": "RUN_20260815_190251",
+  "duration_days": 180,
+  "timestep_days": 14,
+  "total_patients": 2,
+  "arms": [
+    "ARM_VACCINE_A",
+    "ARM_CONTROL"
+  ],
+  "total_decisions": 26,
+  "adverse_event_count": 0,
+  "flags_file": "/media/nick/New Volume/projects/Hexaware_hackathon/UTSA-HSC-TrialGPT/results/simulation_flags.json"
+}

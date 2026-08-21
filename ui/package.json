@@ -1,0 +1,35 @@
+{
+  "name": "hexaware-hackathon",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@google/genai": "^2.17.1",
+    "jszip": "^3.10.1",
+    "lucide-react": "^1.31.0",
+    "papaparse": "^5.6.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-hot-toast": "^2.6.0",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.18.2",
+    "recharts": "^3.10.1"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.4",
+    "jsdom": "^30.0.1",
+    "oxlint": "^1.75.0",
+    "vite": "^8.2.0",
+    "vitest": "^4.1.10"
+  }
+}

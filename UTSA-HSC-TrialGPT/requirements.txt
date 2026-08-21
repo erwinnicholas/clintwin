@@ -1,0 +1,24 @@
+# Web Framework
+fastapi==0.141.1
+uvicorn==0.52.3
+pydantic==2.13.4
+python-multipart==0.0.32
+
+# Data Processing
+numpy==1.26.4
+pandas==2.3.3
+scipy==1.15.3
+
+# LLM APIs
+google-genai==2.18.1
+
+# Transformers and Tokenizers (ColBERT, DeBERTa, SentenceTransformers)
+transformers==5.15.0
+
+# Local Hybrid Search (No API Costs for Embeddings)
+sentence-transformers==5.7.0
+faiss-cpu==1.15.0
+spacy==3.7.5
+negspacy==1.0.4
+rank-bm25==0.2.2
+https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz

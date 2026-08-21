@@ -1,0 +1,5 @@
+criterion_id,trial_id,rule_type,field_name,operator,value_min,value_max
+INC_01,TRIAL_SIM_RA_01,INCLUSION,platelets,>=,100000.0,
+INC_02,TRIAL_SIM_RA_01,INCLUSION,egfr,>=,45.0,
+INC_03,TRIAL_SIM_RA_01,INCLUSION,irb_consent_signed,==,1.0,
+INC_04,TRIAL_SIM_RA_01,INCLUSION,hipaa_authorization,==,1.0,

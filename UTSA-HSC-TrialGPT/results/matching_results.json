@@ -1,0 +1,42 @@
+{
+    "PT01": {
+        "N01": {
+            "0": {},
+            "1": {},
+            "2": {
+                "NCT00000001": {
+                    "results": {
+                        "inclusion": [
+                            {
+                                "criterion_id": 0,
+                                "reasoning": "The patient is 55 years old, which meets the age criterion. The patient has a confirmed diagnosis of breast cancer, which meets the histological criterion. The patient's ECOG performance status is 1, which meets the performance status criterion. The patient completed chemotherapy 15 days ago, which is within the 30-day timeframe. The patient's platelet count is 130,000/uL, which meets the platelet count criterion. Therefore, the patient is included in the trial.",
+                                "label": "included",
+                                "latency_sec": 29.45
+                            }
+                        ],
+                        "exclusion": [
+                            {
+                                "criterion_id": 0,
+                                "reasoning": "The patient is not pregnant and has no known active liver disease. The criterion is not applicable.",
+                                "label": "not applicable",
+                                "latency_sec": 9.57
+                            }
+                        ]
+                    },
+                    "coverage": {
+                        "inclusion": {
+                            "total": 1,
+                            "returned": 1,
+                            "missing": []
+                        },
+                        "exclusion": {
+                            "total": 1,
+                            "returned": 1,
+                            "missing": []
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

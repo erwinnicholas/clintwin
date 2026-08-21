@@ -1,0 +1,7 @@
+Trial Rules for NSCLC
+========================================
+
+- INCLUSION: platelets >= 50000.0
+- INCLUSION: egfr >= 30.0
+- INCLUSION: irb_consent_signed == 1.0
+- INCLUSION: hipaa_authorization == 1.0

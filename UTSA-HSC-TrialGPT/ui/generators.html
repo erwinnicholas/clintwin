@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generators - UTSA-HSC TrialGPT Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <h2>TrialGPT</h2>
+                <span class="badge">Generators</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item" style="text-decoration:none; color:inherit; display:block;">
+                    <span class="nav-icon">⬅️</span> Back to App
+                </a>
+                <button class="nav-item active" data-view="generators">
+                    <span class="nav-icon">⚙️</span> Data Generators
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-bar glass-panel">
+                <div class="header-left">
+                    <h1>Mock Data Generators</h1>
+                    <p class="subtitle">Generate realistic clinical trial datasets for hackathon demonstrations</p>
+                </div>
+            </header>
+
+            <div class="view-container active" id="generators-view">
+                
+                <div class="glass-panel" style="margin-bottom: 2rem;">
+                    <h2>1. Select Target Disease Template</h2>
+                    <p>This determines the underlying biology and clinical notes matching criteria for the generated cohort.</p>
+                    <select id="disease-template" class="form-select" style="width: 200px; padding: 8px; margin-top:10px; border-radius: 4px;">
+                        <option value="NSCLC">NSCLC (Lung Cancer)</option>
+                        <option value="RA">RA (Rheumatoid Arthritis)</option>
+                        <option value="MIXED">MIXED Cohort</option>
+                    </select>
+                </div>
+
+                <div class="card-grid">
+                    <!-- Trial Rules -->
+                    <div class="glass-panel card">
+                        <h3>📋 Trial & Compliance Rules</h3>
+                        <p>Generate inclusion/exclusion and compliance criteria for the target trial.</p>
+                        <div class="action-row" style="display:flex; gap:10px; margin-top:15px;">
+                            <button class="btn btn-primary" onclick="runGenerator('gen_trial_rules')">Generate</button>
+                            <button class="btn btn-secondary" onclick="runGenerator('gen_compliance')">Gen Compliance</button>
+                        </div>
+                        <div id="status-gen_trial_rules" class="status-msg" style="margin-top:10px; font-size:14px; color:#aaa;"></div>
+                    </div>
+
+                    <!-- Baseline Patients -->
+                    <div class="glass-panel card">
+                        <h3>👥 Baseline Patients</h3>
+                        <p>Generate 100 baseline patient records (demographics & day-0 vitals).</p>
+                        <div class="action-row" style="display:flex; gap:10px; margin-top:15px;">
+                            <button class="btn btn-primary" onclick="runGenerator('gen_1_baseline')">Generate</button>
+                            <a href="/api/v1/generators/download/1_baseline_patients.csv" target="_blank" class="btn btn-secondary">Download</a>
+                        </div>
+                        <div id="status-gen_1_baseline" class="status-msg" style="margin-top:10px; font-size:14px; color:#aaa;"></div>
+                    </div>
+
+                    <!-- Clinical Notes -->
+                    <div class="glass-panel card">
+                        <h3>📝 Unstructured Clinical Notes</h3>
+                        <p>Generate semantic physician notes containing specific narrative features.</p>
+                        <div class="action-row" style="display:flex; gap:10px; margin-top:15px;">
+                            <button class="btn btn-primary" onclick="runGenerator('gen_1b_clinical_notes')">Generate</button>
+                            <a href="/api/v1/generators/download/1b_clinical_notes.csv" target="_blank" class="btn btn-secondary">Download</a>
+                        </div>
+                        <div id="status-gen_1b_clinical_notes" class="status-msg" style="margin-top:10px; font-size:14px; color:#aaa;"></div>
+                    </div>
+
+                    <!-- Longitudinal History -->
+                    <div class="glass-panel card">
+                        <h3>📈 6-Month Longitudinal History</h3>
+                        <p>Generate historical lab drift trajectories based on baseline patients.</p>
+                        <div class="action-row" style="display:flex; gap:10px; margin-top:15px;">
+                            <button class="btn btn-primary" onclick="runGenerator('gen_2_history')">Generate</button>
+                            <a href="/api/v1/generators/download/2_6month_history.csv" target="_blank" class="btn btn-secondary">Download</a>
+                        </div>
+                        <div id="status-gen_2_history" class="status-msg" style="margin-top:10px; font-size:14px; color:#aaa;"></div>
+                    </div>
+                </div>
+
+                <div class="glass-panel" style="margin-top: 2rem; background: rgba(56, 189, 248, 0.05); border-color: rgba(56, 189, 248, 0.2);">
+                    <h2>2. Ingest Generated Data</h2>
+                    <p>WARNING: This will wipe the existing TrialGPT database tables and insert all generated data from step 1 into the SQLite application database.</p>
+                    <button class="btn btn-primary" style="margin-top: 15px;" onclick="ingestData()">Ingest Data Now</button>
+                    <div id="ingest-status" class="status-msg" style="margin-top:10px; font-weight:bold;"></div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_BASE = '/api/v1/generators';
+
+        async function runGenerator(scriptName) {
+            const disease = document.getElementById('disease-template').value;
+            const statusEl = document.getElementById(`status-${scriptName}`);
+            statusEl.innerHTML = 'Running... <span class="spinner">↻</span>';
+            statusEl.style.color = '#38bdf8';
+
+            try {
+                const response = await fetch(`${API_BASE}/run/${scriptName}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ disease_template: disease })
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    statusEl.innerText = `✅ Success`;
+                    statusEl.style.color = '#4ade80';
+                } else {
+                    statusEl.innerText = `❌ Error: ${data.detail || data.message}`;
+                    statusEl.style.color = '#f87171';
+                }
+            } catch (err) {
+                statusEl.innerText = `❌ Request failed`;
+                statusEl.style.color = '#f87171';
+            }
+        }
+
+        async function ingestData() {
+            const statusEl = document.getElementById('ingest-status');
+            statusEl.innerHTML = 'Wiping DB and ingesting data... <span class="spinner">↻</span>';
+            statusEl.style.color = '#38bdf8';
+
+            try {
+                const response = await fetch(`${API_BASE}/ingest`, { method: 'POST' });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    statusEl.innerText = `✅ Successfully ingested all generated data. Ready for the App!`;
+                    statusEl.style.color = '#4ade80';
+                } else {
+                    statusEl.innerText = `❌ Error: ${data.detail || data.message}`;
+                    statusEl.style.color = '#f87171';
+                }
+            } catch (err) {
+                statusEl.innerText = `❌ Request failed`;
+                statusEl.style.color = '#f87171';
+            }
+        }
+    </script>
+
+    <style>
+        .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+    </style>
+</body>
+</html>

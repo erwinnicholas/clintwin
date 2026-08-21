@@ -1,0 +1,25 @@
+[
+    {
+        "patient_id": "PT01",
+        "note_id": "N01",
+        "patient": "55-year-old female with Stage II breast cancer, recent chemotherapy 15 days ago.",
+        "patient_raw": "55-year-old female with a confirmed diagnosis of breast cancer, Stage II. She completed her last round of adjuvant chemotherapy (paclitaxel) 15 days ago. Currently on anastrozole for hormonal therapy. ECOG performance status 1. No history of liver or renal disease. Platelet count: 130,000/uL. She is not currently pregnant and has consented to trial participation.",
+        "0": [],
+        "1": [],
+        "2": [
+            {
+                "NCTID": "NCT00000001",
+                "brief_title": "Phase II Study of Pembrolizumab in HER2-Negative Breast Cancer",
+                "phase": "Phase II",
+                "drugs": "['pembrolizumab']",
+                "drugs_list": ["pembrolizumab"],
+                "diseases": "['breast cancer', 'HER2-negative breast cancer']",
+                "diseases_list": ["breast cancer", "HER2-negative breast cancer"],
+                "enrollment": 50,
+                "inclusion_criteria": "Histologically confirmed breast cancer. Age 18 years or older. ECOG performance status 0-2. No chemotherapy within the past 30 days prior to enrollment. Platelet count >= 100,000/uL.",
+                "exclusion_criteria": "Pregnant or nursing women. Known active liver disease. Prior treatment with anti-PD1/PD-L1 therapy.",
+                "brief_summary": "This study evaluates the safety and efficacy of pembrolizumab in patients with HER2-negative breast cancer who have not received recent chemotherapy."
+            }
+        ]
+    }
+]

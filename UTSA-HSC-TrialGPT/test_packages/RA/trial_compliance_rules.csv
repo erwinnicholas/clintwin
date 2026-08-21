@@ -1,0 +1,3 @@
+trial_id,rule_text,uploaded_at
+TRIAL_SIM_RA_01,Requires valid signed IRB consent form dated prior to any procedures.,2024-01-01
+TRIAL_SIM_RA_01,Requires HIPAA authorization for disclosure of PHI.,2024-01-01

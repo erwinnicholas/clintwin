@@ -1,0 +1,42 @@
+{
+  "ctcae_thresholds": {
+    "platelets":    {"direction": "below", "threshold": 50000.0, "severity": "CRITICAL", "action": "HALT_PATIENT"},
+    "egfr":         {"direction": "below", "threshold": 30.0,    "severity": "CRITICAL", "action": "HALT_PATIENT"},
+    "alt":          {"direction": "above", "threshold": 150.0,   "severity": "WARNING",  "action": "HOLD_DOSE"},
+    "ast":          {"direction": "above", "threshold": 150.0,   "severity": "WARNING",  "action": "HOLD_DOSE"},
+    "hemoglobin":   {"direction": "below", "threshold": 7.0,     "severity": "CRITICAL", "action": "HALT_PATIENT"},
+    "anc":          {"direction": "below", "threshold": 500.0,   "severity": "CRITICAL", "action": "HALT_PATIENT"}
+  },
+  "pomdp_policy": {
+    "z_hold_threshold": -2.5,
+    "z_positive_threshold": 1.0
+  },
+  "simulation_defaults": {
+    "duration_days": 180,
+    "timestep_days": 14,
+    "seed": 42,
+    "bio_noise_scale": 0.3
+  },
+  "metric_order": [
+    "egfr", "serum_creatinine", "alt", "ast", "platelets",
+    "anc", "hemoglobin", "systolic_bp", "diastolic_bp", "hba1c"
+  ],
+  "lab_noise_std": {
+    "egfr": 2.0,
+    "serum_creatinine": 0.05,
+    "alt": 3.0,
+    "ast": 3.0,
+    "platelets": 5000.0,
+    "anc": 100.0,
+    "hemoglobin": 0.3,
+    "systolic_bp": 4.0,
+    "diastolic_bp": 3.0,
+    "hba1c": 0.1
+  },
+  "stratification": {
+    "strata_vars_large_n": ["age_bracket", "sex", "ecog_score"],
+    "strata_vars_small_n": ["age_bracket", "sex"],
+    "large_n_threshold": 50,
+    "age_bracket_cutoff": 65
+  }
+}

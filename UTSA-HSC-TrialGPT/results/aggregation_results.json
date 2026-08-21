@@ -1,0 +1,13 @@
+{
+  "PT01": {
+    "N01": {
+      "NCT00000001": {
+        "relevance_score_R": 80,
+        "relevance_explanation": "The patient has a confirmed diagnosis of breast cancer, which is the primary disease of interest in the trial. However, the patient has recently completed chemotherapy, which may affect the efficacy of pembrolizumab.",
+        "eligibility_score_E": 90,
+        "eligibility_explanation": "The patient meets most of the inclusion criteria, including age, ECOG performance status, and platelet count. The only potential issue is the recent completion of chemotherapy, but this is not a strict exclusion criterion.",
+        "latency_sec": 35.28
+      }
+    }
+  }
+}

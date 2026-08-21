@@ -1,0 +1,16 @@
+{
+    "NCT00000001": {
+        "inclusion": [
+            {
+                "criterion_id": 0,
+                "text": "Histologically confirmed breast cancer. Age 18 years or older. ECOG performance status 0-2. No chemotherapy within the past 30 days prior to enrollment. Platelet count >= 100,000/uL."
+            }
+        ],
+        "exclusion": [
+            {
+                "criterion_id": 0,
+                "text": "Pregnant or nursing women. Known active liver disease. Prior treatment with anti-PD1/PD-L1 therapy."
+            }
+        ]
+    }
+}

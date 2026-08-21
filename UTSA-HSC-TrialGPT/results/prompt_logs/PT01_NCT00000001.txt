@@ -1,0 +1,38 @@
+Patient ID: PT01
+
+0. 55-year-old female with a confirmed diagnosis of breast cancer, Stage II.
+1. She completed her last round of adjuvant chemotherapy (paclitaxel) 15 days ago.
+2. Currently on anastrozole for hormonal therapy.
+3. ECOG performance status 1.
+4. No history of liver or renal disease.
+5. Platelet count: 130,000/uL.
+6. She is not currently pregnant and has consented to trial participation.
+7. The patient will provide informed consent, and will comply with the trial protocol without any practical issues.
+
+Clinical Trial ID: NCT00000001
+Clinical Trial Title: Phase II Study of Pembrolizumab in HER2-Negative Breast Cancer
+Diseases: breast cancer, HER2-negative breast cancer
+Summary: This study evaluates the safety and efficacy of pembrolizumab in patients with HER2-negative breast cancer who have not received recent chemotherapy.
+
+Eligibility Reasoning:
+
+Inclusion Criteria:
+0. Histologically confirmed breast cancer. Age 18 years or older. ECOG performance status 0-2. No chemotherapy within the past 30 days prior to enrollment. Platelet count >= 100,000/uL.
+	Reasoning: The patient is 55 years old, which meets the age criterion. The patient has a confirmed diagnosis of breast cancer, which meets the histological criterion. The patient's ECOG performance status is 1, which meets the performance status criterion. The patient completed chemotherapy 15 days ago, which is within the 30-day timeframe. The patient's platelet count is 130,000/uL, which meets the platelet count criterion. Therefore, the patient is included in the trial.
+	Label: included
+
+Exclusion Criteria:
+0. Pregnant or nursing women. Known active liver disease. Prior treatment with anti-PD1/PD-L1 therapy.
+	Reasoning: The patient is not pregnant and has no known active liver disease. The criterion is not applicable.
+	Label: not applicable
+
+
+Based on the above, provide:
+- A relevance score R (0-100) indicating how relevant the patient is to the trial.
+- An eligibility score E (0-100) based on inclusion/exclusion match.
+- A short explanation for each.
+Provide your reasoning, then provide the JSON scores wrapped in $$$JSON_START$$$ and $$$JSON_END$$$.
+OUTPUT FORMAT:
+$$$JSON_START$$$
+{"relevance_score_R": <int>, "relevance_explanation": "<str>", "eligibility_score_E": <int>, "eligibility_explanation": "<str>"}
+$$$JSON_END$$$

@@ -1,0 +1,47 @@
+{
+  "ARM_CONTROL": {
+    "name": "Placebo (Control)",
+    "daily_effects": {},
+    "noise_scales": {
+      "egfr": 0.3, "platelets": 500.0, "alt": 0.5, "ast": 0.5,
+      "hemoglobin": 0.05, "anc": 30.0, "systolic_bp": 0.5,
+      "diastolic_bp": 0.3, "serum_creatinine": 0.01, "hba1c": 0.01
+    },
+    "onset_day": 0,
+    "description": "No active drug. Only natural biological drift + lab noise."
+  },
+  "ARM_VACCINE_A": {
+    "name": "Vaccine A (Mild Therapeutic)",
+    "daily_effects": {
+      "platelets": -80.0,
+      "alt": 0.15,
+      "anc": -5.0,
+      "hemoglobin": -0.005
+    },
+    "noise_scales": {
+      "egfr": 0.5, "platelets": 1200.0, "alt": 1.5, "ast": 1.0,
+      "hemoglobin": 0.08, "anc": 50.0, "systolic_bp": 0.8,
+      "diastolic_bp": 0.5, "serum_creatinine": 0.02, "hba1c": 0.02
+    },
+    "onset_day": 7,
+    "description": "Mild therapeutic. Slight marrow suppression, minimal hepatic signal."
+  },
+  "ARM_VACCINE_B": {
+    "name": "Vaccine B (Aggressive / Toxic Variant)",
+    "daily_effects": {
+      "platelets": -150.0,
+      "alt": 3.0,
+      "ast": 2.5,
+      "egfr": -0.15,
+      "hemoglobin": -0.02,
+      "anc": -20.0
+    },
+    "noise_scales": {
+      "egfr": 1.0, "platelets": 500.0, "alt": 3.0, "ast": 2.5,
+      "hemoglobin": 0.15, "anc": 80.0, "systolic_bp": 1.5,
+      "diastolic_bp": 1.0, "serum_creatinine": 0.03, "hba1c": 0.03
+    },
+    "onset_day": 14,
+    "description": "Aggressive variant. Triggers acute thrombocytopenia and hepatotoxicity post Day 28."
+  }
+}

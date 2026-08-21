@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTSA-HSC TrialGPT Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    
+    <!-- Escalation Alert Banner -->
+    <div id="alert-banner" class="alert-banner hidden">
+        <span id="alert-icon">⚠️</span>
+        <span id="alert-message">System Alert</span>
+        <button id="alert-close">×</button>
+    </div>
+
+    <div class="app-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <h2>TrialGPT</h2>
+                <span class="badge">POMDP Agent</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="generators.html" class="nav-item" style="text-decoration:none; color:inherit; display:block; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3);">
+                    <span class="nav-icon">⚙️</span> Data Generators
+                </a>
+                <button class="nav-item active" data-view="dashboard">
+                    <span class="nav-icon">📊</span> Dashboard
+                </button>
+                <button class="nav-item" data-view="upload">
+                    <span class="nav-icon">📤</span> Data Ingestion
+                </button>
+                <button class="nav-item" data-view="trials">
+                    <span class="nav-icon">📋</span> Trial Config
+                </button>
+                <button class="nav-item" data-view="patients">
+                    <span class="nav-icon">👥</span> Selected Patients
+                </button>
+                <button class="nav-item" data-view="pipeline">
+                    <span class="nav-icon">⚙️</span> Pipeline
+                </button>
+                <button class="nav-item" data-view="simulation">
+                    <span class="nav-icon">🔬</span> Simulation
+                </button>
+                <button class="nav-item" data-view="results">
+                    <span class="nav-icon">📊</span> Results
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="toggle-gemini" checked>
+                    <span class="slider"></span>
+                    <span class="label">Gemini Explanations</span>
+                </label>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- ================= Dashboard ================= -->
+            <section id="view-dashboard" class="view-section active">
+                <div class="glass-panel" style="margin-bottom: 20px;">
+                    <h2>System Dashboard</h2>
+                    <p>Overview of the TrialGPT cohort and active trials.</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px;">
+                    <div class="glass-panel card" style="text-align: center;">
+                        <h3 style="margin-top:0;">Total Patients</h3>
+                        <div id="stat-total-patients" style="font-size: 3rem; font-weight: 700; color: var(--primary);">--</div>
+                    </div>
+                    <div class="glass-panel card" style="text-align: center;">
+                        <h3 style="margin-top:0;">Total Trials</h3>
+                        <div id="stat-total-trials" style="font-size: 3rem; font-weight: 700; color: var(--success);">--</div>
+                    </div>
+                    <div class="glass-panel card" style="text-align: center;">
+                        <h3 style="margin-top:0;">Patients Enrolled</h3>
+                        <div id="stat-enrolled-patients" style="font-size: 3rem; font-weight: 700; color: var(--accent);">--</div>
+                    </div>
+                </div>
+
+                <div class="glass-panel card">
+                    <h3>Demographics of Enrolled Patients</h3>
+                    <canvas id="demographicsChart" style="max-height: 300px;"></canvas>
+                </div>
+            </section>
+
+            <!-- ================= Ingestion Module ================= -->
+            <section id="view-upload" class="view-section hidden">
+                <div class="glass-panel content-panel">
+                    <h2>Patient Data Ingestion</h2>
+                    <p class="text-secondary">Upload static baseline vitals or 6-month longitudinal history.</p>
+                    
+                    <div class="upload-grid">
+                        <div class="upload-card">
+                            <h3>Tabular Baseline (CSV)</h3>
+                            <input type="file" id="file-tabular" accept=".csv,.xlsx">
+                            <button id="btn-upload-tabular" class="btn primary">Upload & Ingest</button>
+                        </div>
+                        
+                        <div class="upload-card">
+                            <h3>View Enrolled Patients</h3>
+                            <button id="btn-view-patients" class="btn">View Data</button>
+                        </div>
+                        
+                        <div id="modal-patients" class="modal hidden">
+                            <div class="modal-content glass-panel">
+                                <h3>Patients Directory</h3>
+                                <div class="table-container" style="max-height: 300px; overflow-y: auto;">
+                                    <table id="table-patients-view">
+                                        <thead><tr><th>Patient ID</th><th>Age</th><th>Sex</th><th>BMI</th><th>ECOG</th></tr></thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <button class="btn" onclick="document.getElementById('modal-patients').classList.add('hidden')">Close</button>
+                            </div>
+                        </div>
+                        <div class="upload-card">
+                            <h3>Clinical Notes (CSV Bulk)</h3>
+                            <p class="text-secondary" style="font-size:0.75rem;">Upload 1b_clinical_notes.csv</p>
+                            <input type="file" id="file-notes-csv" accept=".csv">
+                            <button id="btn-upload-notes-csv" class="btn primary">Upload & Index</button>
+                        </div>
+                        <div class="upload-card full-width">
+                            <h3>Single Clinical Note</h3>
+                            <textarea id="text-note" rows="3" placeholder="Paste physician note here..."></textarea>
+                            <input type="text" id="note-patient-id" placeholder="Patient ID (e.g. PT-A1B2C3D4)">
+                            <button id="btn-upload-note" class="btn">Index Note (RAG)</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View: Trials -->
+            <section id="view-trials" class="view-section hidden">
+                <div class="glass-panel content-panel">
+                    <h2>Trial Configuration</h2>
+                    
+                    <div class="form-group">
+                        <input type="text" id="trial-title" placeholder="Trial Title (e.g. NCT04567890)">
+                        <button id="btn-create-trial" class="btn primary">Create Trial</button>
+                    </div>
+                    
+                    <div id="trial-active-config" class="hidden">
+                        <h3 id="active-trial-id" class="text-accent"></h3>
+                        
+                        <div class="upload-grid mt-20">
+                            <div class="upload-card">
+                                <h4>Compliance Rules (Guardrails)</h4>
+                                <textarea id="text-compliance" rows="3" placeholder="e.g. HALT if ALT > 3.0x ULN"></textarea>
+                                <button id="btn-save-compliance" class="btn">Save Rules</button>
+                            </div>
+                            <div class="upload-card">
+                                <h4>Semantic Criteria</h4>
+                                <textarea id="text-criteria" rows="3" placeholder="e.g. Must not have severe hypertension"></textarea>
+                                <button id="btn-save-criteria" class="btn">Save Criteria</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View: Pipeline -->
+            <section id="view-pipeline" class="view-section hidden">
+                <div class="glass-panel content-panel">
+                    <h2>Patient Selection Pipeline</h2>
+                    
+                    <div class="pipeline-stepper">
+                        <div class="step" id="step-hard">
+                            <div class="step-icon">1</div>
+                            <div class="step-content">
+                                <h3>Deterministic Filter</h3>
+                                <button class="btn small" id="btn-run-hard">Execute</button>
+                                <div class="step-result" id="res-hard"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="step" id="step-semantic">
+                            <div class="step-icon">2</div>
+                            <div class="step-content">
+                                <h3>Semantic Filter (Embedding)</h3>
+                                <button class="btn small" id="btn-run-semantic">Execute</button>
+                                <div class="step-result" id="res-semantic"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="step" id="step-compliance">
+                            <div class="step-icon">3</div>
+                            <div class="step-content">
+                                <h3>Compliance Check</h3>
+                                <button class="btn small" id="btn-run-compliance">Execute</button>
+                                <div class="step-result" id="res-compliance"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="step" id="step-longitudinal">
+                            <div class="step-icon">4</div>
+                            <div class="step-content">
+                                <h3>Upload 6-Month History</h3>
+                                <p class="text-secondary" style="font-size: 0.8rem; margin-bottom: 8px;">For filtered candidates only.</p>
+                                <input type="file" id="file-longitudinal" accept=".csv,.xlsx" style="display:block; margin-bottom:8px;">
+                                <button class="btn small" id="btn-upload-longitudinal">Upload Data</button>
+                                <div class="step-result" id="res-longitudinal"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="step" id="step-twins">
+                            <div class="step-icon">5</div>
+                            <div class="step-content">
+                                <h3>Digital Twin Validation</h3>
+                                <button class="btn small" id="btn-run-twins">Build Twins</button>
+                                <div class="step-result" id="res-twins"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= Selected Patients ================= -->
+            <section id="view-patients" class="view-section hidden">
+                <div class="glass-panel content-panel">
+                    <h2>Selected Patients</h2>
+                    <p class="text-secondary">View the final cohort and POMDP decision explanations.</p>
+                    
+                    <div class="action-row" style="margin-bottom: 20px;">
+                        <button id="btn-load-selected-patients" class="btn primary">Load Trial Patients</button>
+                    </div>
+
+                    <table id="table-selected-patients" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Status</th>
+                                <th>Arm ID</th>
+                                <th>Explanation</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <!-- Explanation Modal -->
+                <div id="modal-explain" class="modal hidden">
+                    <div class="modal-content glass-panel" style="max-width: 600px; width: 100%;">
+                        <div class="modal-header">
+                            <h2>Gemini POMDP Explanation</h2>
+                            <button class="close-btn" id="btn-close-explain">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="explain-loading" style="display:none; color: var(--accent); margin-bottom: 15px;">
+                                Generating explanation with Gemini 2.5... <span class="spinner">↻</span>
+                            </div>
+                            <div id="explain-content" style="white-space: pre-wrap; font-family: monospace; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View: Simulation -->
+            <section id="view-simulation" class="view-section hidden">
+                <div class="simulation-layout">
+                    
+                    <div class="sim-header glass-panel">
+                        <div class="sim-controls">
+                            <h2>Vectorized POMDP Simulation</h2>
+                            <button id="btn-start-sim" class="btn primary">Initialize Trial</button>
+                            
+                            <div class="upload-step-group ml-20" style="display:inline-flex; align-items:center; gap:8px;">
+                                <input type="file" id="file-step-csv" accept=".csv" style="width: 200px;">
+                                <input type="number" id="input-step-day" value="14" step="14" style="width:60px;">
+                                <button id="btn-upload-step" class="btn" disabled>Upload & Process</button>
+                            </div>
+                            
+                            <span id="sim-status" class="badge ml-20">READY</span>
+                            <span id="sim-day-counter" class="text-accent ml-20">Day 0</span>
+                        </div>
+                        <div class="sim-metric-select">
+                            <select id="sim-metric">
+                                <option value="platelets">Platelets (10^9/L)</option>
+                                <option value="egfr">eGFR (mL/min)</option>
+                                <option value="alt">ALT (U/L)</option>
+                                <option value="hemoglobin">Hemoglobin (g/dL)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="sim-main-grid mt-20">
+                        <div class="chart-container glass-panel">
+                            <canvas id="liveChart"></canvas>
+                        </div>
+                        
+                        <div class="forecast-panel glass-panel">
+                            <h3>Agent Forecast & Escalations</h3>
+                            <div id="forecast-feed" class="feed-container">
+                                <!-- Alerts injected here -->
+                            </div>
+                        </div>
+                        
+                        <div class="delta-panel glass-panel">
+                            <h3>Prediction Accuracy (Delta)</h3>
+                            <div class="table-container" style="max-height: 250px; overflow-y: auto;">
+                                <table id="delta-table">
+                                    <thead><tr><th>PID</th><th>Metric</th><th>Error (Actual - Forecast)</th></tr></thead>
+                                    <tbody id="delta-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="balance-panel glass-panel mt-20">
+                        <h3>Cohort Balance (Table 1)</h3>
+                        <div class="table-container">
+                            <table id="balance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Test Used</th>
+                                        <th>P-Value</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="balance-body">
+                                    <!-- Balance rows here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="patient-grid glass-panel mt-20">
+                        <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 12px;">
+                            <h3>Live Patient Timeline (Actions)</h3>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggle-all-patients">
+                                <span class="slider"></span>
+                                <span class="label" style="margin-left: 8px;">View All 60 Patients</span>
+                            </label>
+                        </div>
+                        <div class="table-container">
+                            <table id="timeline-table">
+                                <thead>
+                                    <tr id="timeline-header">
+                                        <th>Patient ID</th>
+                                        <th>Arm</th>
+                                        <!-- Days injected here -->
+                                    </tr>
+                                </thead>
+                                <tbody id="timeline-body">
+                                    <!-- Rows injected here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!-- Explainability Panel (Slide up) -->
+                <div id="explain-panel" class="explain-panel hidden">
+                    <h3>Clinical Rationale</h3>
+                    <div id="explain-content" class="report-content"></div>
+                    <button id="btn-close-explain" class="btn-close">Close</button>
+                </div>
+            </section>
+            
+            <!-- View: Results -->
+            <section id="view-results" class="view-section hidden">
+                <div class="glass-panel content-panel">
+                    <h2>Simulation Results</h2>
+                    <p>Live trial run complete. Generate the official report to present to the clinical board.</p>
+                    <button id="btn-finalize-trial" class="btn primary">Finalize Trial & Generate Report</button>
+                    <div id="report-container" class="mt-20 hidden">
+                        <a id="link-download-report" href="#" target="_blank" class="btn">Print PDF Report</a>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <!-- Load application logic -->
+    <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

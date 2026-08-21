@@ -1,0 +1,8 @@
+Trial Text Rules for NSCLC
+========================================
+
+EXCLUSION: The patient has had prior treatment with PD-1 or PD-L1 immune checkpoint inhibitors like Pembrolizumab, Nivolumab, or Atezolizumab.
+EXCLUSION: The patient has an active autoimmune disease such as rheumatoid arthritis (RA), systemic lupus erythematosus (SLE), or multiple sclerosis (MS).
+EXCLUSION: The patient has a history of solid organ transplant requiring chronic immunosuppression like tacrolimus.
+EXCLUSION: The patient has active symptomatic brain metastases requiring dexamethasone or steroid therapy.
+EXCLUSION: The patient has an active HIV infection, latent tuberculosis (TB), or Hepatitis B/C (HBV/HCV) positive status.

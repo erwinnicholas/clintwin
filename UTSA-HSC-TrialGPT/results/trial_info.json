@@ -1,0 +1,12 @@
+{
+    "NCT00000001": {
+        "brief_title": "Phase II Study of Pembrolizumab in HER2-Negative Breast Cancer",
+        "brief_summary": "This study evaluates the safety and efficacy of pembrolizumab in patients with HER2-negative breast cancer who have not received recent chemotherapy.",
+        "diseases_list": ["breast cancer", "HER2-negative breast cancer"],
+        "drugs_list": ["pembrolizumab"],
+        "phase": "Phase II",
+        "enrollment": 50,
+        "inclusion_criteria": "Histologically confirmed breast cancer. Age 18 years or older. ECOG performance status 0-2. No chemotherapy within the past 30 days prior to enrollment. Platelet count >= 100,000/uL.",
+        "exclusion_criteria": "Pregnant or nursing women. Known active liver disease. Prior treatment with anti-PD1/PD-L1 therapy."
+    }
+}

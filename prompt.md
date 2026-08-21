@@ -1,0 +1,3 @@
+But still theirs is superior if i want to sell this as a product to companies what should i do first would be a full schema restructuring with actual shema data then a ingestion pipeline which translates different schema maps into ours since not everyone follows same but there exists standards then proceed with inclusion exclusion rule engine building and orchestration
+
+i want a production one for trial matching not one for hackathon

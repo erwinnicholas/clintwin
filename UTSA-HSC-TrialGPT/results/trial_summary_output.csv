@@ -1,0 +1,2 @@
+patient_id,note_id,trial_id,brief_title,total_score,relevance_score_R,eligibility_score_E
+PT01,N01,NCT00000001,Phase II Study of Pembrolizumab in HER2-Negative Breast Cancer,2.7,80,90

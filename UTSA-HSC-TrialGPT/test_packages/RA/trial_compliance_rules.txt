@@ -1,0 +1,11 @@
+Compliance Rules for RA
+========================================
+
+Trial ID: TRIAL_SIM_RA_01
+Rule: Requires valid signed IRB consent form dated prior to any procedures.
+Uploaded At: 2024-01-01
+--------------------
+Trial ID: TRIAL_SIM_RA_01
+Rule: Requires HIPAA authorization for disclosure of PHI.
+Uploaded At: 2024-01-01
+--------------------

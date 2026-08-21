@@ -1,0 +1,68 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Node/Vite UI
+ui/node_modules/
+ui/dist/
+ui/dist-ssr/
+ui/*.local
+.npm
+pnpm-lock.yaml
+
+# C/C++ / Llama.cpp artifacts
+*.whl
+*.o
+*.obj
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Logs and databases
+*.log
+*.sqlite
+*.sqlite3
+*.db
+data/*.csv
+!data/.keep
+data/*.json
+
+# IDEs and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Gemeni / Deepmind artifacts
+.gemini/
+brain/
+*.md.bak
